@@ -1,0 +1,39 @@
+{
+  "name": "autoscript-suites",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "e2e/autoscript-suites/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nx-extend/e2e-runner:run",
+      "options": {
+        "runner": "playwright",
+        "targets": [
+          {
+            "target": "mock-api:serve",
+            "checkUrl": "https://api.example.com:9443/healthcheck",
+            "checkMaxTries": 50,
+            "rejectUnauthorized": false
+          },
+          {
+            "target": "autoscript-apps:serve",
+            "checkUrl": "http://localhost:3000",
+            "checkMaxTries": 50,
+            "rejectUnauthorized": false
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["e2e/autoscript-suites/**/*.{js,ts}"],
+        "fix": true,
+        "ignorePath": ".gitignore"
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["autoscript-apps"]
+}

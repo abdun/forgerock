@@ -1,0 +1,55 @@
+# OS files
+.DS_Store
+*/DS_Store
+
+# Generated code
+tmp/
+*/dist/*
+dist/*
+packages/*/dist/
+packages/javascript-sdk/lib-esm
+packages/javascript-sdk/lib
+packages/javascript-sdk/bundle/
+bundles/
+docs/
+coverage/
+node_modules/
+samples/_static/js/*.js*
+tests/**/app/index.js*
+tests/**/ie11/ie-bundle.js*
+reports/*
+*.copy.*
+!env.config.copy.mjs
+packages/javascript-sdk/lib/
+.swc
+
+# Certificates
+*.pem
+
+# IDEs
+.vscode
+
+# Test code
+tests/**/app/index.js*
+tests/**/ie11/autoscript.js*
+reports/*
+test-results
+
+# Sample code
+samples/_static/js/*.js*
+samples/_static/js/*
+samples/*/public/app.*
+samples/*/users
+!samples/angular-todo/*/todos
+!samples/reactjs-todo/*/todos
+
+# Environment files
+.env
+.env.local
+.angular
+samples/**/.env.local
+samples/**/.env
+todos/*
+users/*
+#Project Docs
+docs/packages/javascript-sdk

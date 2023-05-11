@@ -1,0 +1,84 @@
+{
+  "name": "mock-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "e2e/mock-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/e2e/mock-api",
+        "format": ["cjs"],
+        "bundle": true,
+        "main": "e2e/mock-api/src/index.js",
+        "tsConfig": "e2e/mock-api/tsconfig.app.json",
+        "assets": ["e2e/mock-api/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true
+        }
+      },
+      "configurations": {
+        "development": {
+          "watch": true
+        },
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "e2e/mock-api/src/environments/environment.ts",
+              "with": "e2e/mock-api/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "mock-api:build",
+        "watch": true
+      },
+      "configurations": {
+        "live": {},
+        "development": {},
+        "production": {
+          "buildTarget": "mock-api:build:production",
+          "args": ["MOCK_PORT=9443"]
+        }
+      }
+    },
+    "deploy": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "nx build mock-api --prod",
+          "docker build -f ./e2e/mock-api/Dockerfile . -t mock-api"
+        ],
+        "parallel": false
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["e2e/mock-api/**/*.ts"],
+        "fix": true,
+        "ignorePath": ".gitignore"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/e2e/mock-api"],
+      "options": {
+        "jestConfig": "e2e/mock-api/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:e2e"]
+}
