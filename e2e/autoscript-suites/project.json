@@ -17,7 +17,7 @@
           },
           {
             "target": "autoscript-apps:serve",
-            "checkUrl": "http://localhost:3000",
+            "checkUrl": "https://sdkapp.example.com:8443",
             "checkMaxTries": 50,
             "rejectUnauthorized": false
           }
